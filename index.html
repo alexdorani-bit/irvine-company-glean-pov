@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Glean for Irvine Company</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f5f7; --bg-card: #ffffff; --text: #1d1d1f; --text-secondary: #6e6e73;
+      --text-tertiary: #86868b; --accent: #0071e3; --accent-soft: rgba(0,113,227,0.08);
+      --border: rgba(0,0,0,0.08); --border-light: rgba(0,0,0,0.05);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-md: 0 2px 6px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.07);
+      --radius: 12px; --radius-sm: 8px;
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(245,245,247,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-light); }
+    .nav-brand { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+    .nav-brand .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; letter-spacing: 0.01em; }
+    .nav-links a:hover { color: var(--text); }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    .container-wide { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    .hero { padding: 100px 0 72px; text-align: center; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+    .hero-eyebrow::before, .hero-eyebrow::after { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); opacity: 0.4; }
+    .hero h1 { font-size: clamp(36px, 5vw, 54px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.08; color: var(--text); margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub { font-size: 18px; color: var(--text-secondary); font-weight: 400; max-width: 560px; margin: 0 auto 48px; line-height: 1.55; }
+    .callouts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 80px; }
+    .callout { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow-sm); opacity: 0; transform: translateY(16px); animation: fadeUp 0.5s ease forwards; }
+    .callout:nth-child(1) { animation-delay: 0.1s; }
+    .callout:nth-child(2) { animation-delay: 0.2s; }
+    .callout:nth-child(3) { animation-delay: 0.3s; }
+    .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; }
+    .callout-text { font-size: 14px; color: var(--text); line-height: 1.5; font-weight: 500; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 48px; }
+    .whys { display: flex; flex-direction: column; }
+    .why-item { display: grid; grid-template-columns: 64px 1fr; gap: 0 32px; padding: 40px 0; border-bottom: 1px solid var(--border-light); opacity: 0; transform: translateY(12px); }
+    .why-item.visible { animation: fadeUp 0.45s ease forwards; }
+    .why-item:last-child { border-bottom: none; }
+    .why-num { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: 0.05em; padding-top: 3px; }
+    .why-content h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); margin-bottom: 10px; line-height: 1.25; }
+    .why-content p { font-size: 15px; color: var(--text-secondary); line-height: 1.65; }
+    .use-cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .uc-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; opacity: 0; transform: translateY(12px); }
+    .uc-card.visible { animation: fadeUp 0.45s ease forwards; }
+    .uc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(0,113,227,0.2); }
+    .uc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .uc-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 20px; padding: 3px 10px; }
+    .uc-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
+    .uc-problem { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+    .uc-expand-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; transition: gap 0.2s ease; }
+    .uc-expand-btn:hover { gap: 10px; }
+    .uc-expand-btn svg { transition: transform 0.25s ease; }
+    .uc-expand-btn.open svg { transform: rotate(180deg); }
+    .uc-detail { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-light); }
+    .uc-detail.open { display: block; }
+    .uc-detail-section { margin-bottom: 14px; }
+    .uc-detail-section:last-child { margin-bottom: 0; }
+    .uc-detail-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px; }
+    .uc-detail-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+    .uc-detail ul { padding-left: 0; list-style: none; }
+    .uc-detail ul li { font-size: 13px; color: var(--text-secondary); line-height: 1.6; padding: 3px 0 3px 16px; position: relative; }
+    .uc-detail ul li::before { content: ''; position: absolute; left: 0; top: 11px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.6; }
+    .platform-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .platform-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 28px; box-shadow: var(--shadow-sm); opacity: 0; transform: translateY(12px); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .platform-card.visible { animation: fadeUp 0.45s ease forwards; }
+    .platform-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .platform-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .platform-icon svg { width: 20px; height: 20px; stroke: var(--accent); }
+    .platform-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: var(--text); margin-bottom: 6px; }
+    .platform-sub { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; }
+    .platform-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .proof-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); opacity: 0; transform: translateY(12px); }
+    .proof-card.visible { animation: fadeUp 0.45s ease forwards; }
+    .proof-sector { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .proof-card h3 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .proof-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+    .proof-stat { font-size: 13px; font-weight: 600; color: var(--text); background: var(--accent-soft); border-radius: 6px; padding: 6px 12px; display: inline-block; }
+    .phases { display: flex; flex-direction: column; }
+    .phase-item { display: grid; grid-template-columns: 140px 1fr; gap: 0 40px; padding: 36px 0; border-bottom: 1px solid var(--border-light); opacity: 0; transform: translateY(12px); }
+    .phase-item.visible { animation: fadeUp 0.45s ease forwards; }
+    .phase-item:last-child { border-bottom: none; }
+    .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
+    .phase-name { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+    .phase-right h3 { font-size: 18px; font-weight: 600; color: var(--text); letter-spacing: -0.015em; margin-bottom: 8px; }
+    .phase-right p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 12px; }
+    .phase-ucs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .phase-uc-tag { font-size: 11px; font-weight: 500; color: var(--text-secondary); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; }
+    .closing { text-align: center; padding: 96px 0 80px; }
+    .closing h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 16px; line-height: 1.15; }
+    .closing p { font-size: 16px; color: var(--text-secondary); max-width: 480px; margin: 0 auto 32px; line-height: 1.6; }
+    .closing-steps { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .closing-step { font-size: 13px; color: var(--text-secondary); background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 6px 16px; }
+    footer { border-top: 1px solid var(--border-light); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-left, .footer-right { font-size: 12px; color: var(--text-tertiary); }
+    .section-header { margin-bottom: 48px; }
+    .section-header h2 { font-size: clamp(26px, 3.5vw, 36px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; color: var(--text); margin-bottom: 10px; }
+    .section-header p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; max-width: 540px; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; } .nav-links { display: none; }
+      .callouts, .use-cases-grid, .platform-grid, .proof-grid { grid-template-columns: 1fr; }
+      .phase-item { grid-template-columns: 1fr; gap: 8px; }
+      .hero { padding: 64px 0 48px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <div class="nav-brand"><div class="dot"></div>Glean × Irvine Company</div>
+  <div class="nav-links">
+    <a href="#why">Why</a><a href="#use-cases">Use Cases</a>
+    <a href="#platform">Platform</a><a href="#proof">Proof</a><a href="#path">Path</a>
+  </div>
+</nav>
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow">Office Properties Division</div>
+    <h1>Why Glean for<br /><em>Irvine Company</em></h1>
+    <p class="hero-sub">Turn fragmented tenant data, SOPs, and lease history into a unified, permission-aware layer — so every team delivers a white glove experience at every moment of the lease lifecycle.</p>
+  </div>
+  <div class="callouts">
+    <div class="callout"><div class="callout-label">Core Problem</div><div class="callout-text">Tenant context is scattered across Salesforce, ServiceNow, SharePoint, and email — forcing staff to manually stitch the picture together at every touchpoint</div></div>
+    <div class="callout"><div class="callout-label">TIC's Edge</div><div class="callout-text">590+ Class A office buildings, decades of leasing playbooks, and a C-suite mandate to move faster on AI across property management, leasing, and operations</div></div>
+    <div class="callout"><div class="callout-label">Glean Fit</div><div class="callout-text">Native connectors to Salesforce, ServiceNow, SharePoint, and Google — one permission-aware Work AI layer with search, assistant, and agents</div></div>
+  </div>
+</div>
+<div id="why" style="background:var(--bg-card)">
+  <div class="container" style="padding-top:80px;padding-bottom:80px">
+    <div class="section-label">The three whys</div>
+    <div class="whys">
+      <div class="why-item"><div class="why-num">01</div><div class="why-content"><h3>Deliver consistency — not tribal knowledge</h3><p>TIC's white glove standard can't depend on which leasing rep or property manager happens to have the tribal knowledge. Glean codifies the playbooks, lease history, and tenant context so every employee — across every market — delivers the same caliber of service.</p></div></div>
+      <div class="why-item"><div class="why-num">02</div><div class="why-content"><h3>Make SFDC the single source of truth — not a data graveyard</h3><p>Salesforce is only as valuable as the context around it. Glean connects SFDC to the emails, lease documents, work orders, and service history that give every opportunity real meaning — and surfaces gaps in pipeline hygiene automatically.</p></div></div>
+      <div class="why-item"><div class="why-num">03</div><div class="why-content"><h3>Standardize every move — at every building</h3><p>Move-in and move-out processes at 590+ buildings can't be managed by checklists and memory. Glean pulls the right SOP, the right lease obligations, and the right vendor history in real time — so every handoff is documented and every tenant's first and last impression matches TIC's brand.</p></div></div>
+    </div>
+  </div>
+</div>
+<div id="use-cases">
+  <div class="container-wide" style="padding:80px 24px">
+    <div class="section-header">
+      <div class="section-label" style="margin-bottom:12px">Key use cases</div>
+      <h2>10 agents for the full lease lifecycle</h2>
+      <p>From first contact to suite turnover — Glean puts the right context in front of the right person at every stage.</p>
+    </div>
+    <div class="use-cases-grid">
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">SFDC</span><span class="uc-tag">White Glove</span></div><h3>Tenant 360 Agent</h3><div class="uc-problem">Leasing reps and property managers navigate Salesforce, emails, SharePoint, and ServiceNow separately — every conversation starts with incomplete context.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Pulls a consolidated real-time tenant profile on demand. Ask "What's the status on XYZ Corp's renewal at Spectrum Terrace?" — surfaces SFDC opportunity stage, last email, open work orders, lease expiration, TI allowances, and SharePoint LOIs.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Every call starts with full context</li><li>SFDC data gaps surfaced automatically</li><li>White glove experience delivered consistently</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Move-In</span><span class="uc-tag">Operations</span></div><h3>Move-In Coordinator Agent</h3><div class="uc-problem">Coordinating a new tenant move-in across Leasing, PM, Facilities, IT, and Legal is manual and inconsistently executed — leading to delays at the most critical moment.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Triggered on lease execution in SFDC — generates a property-specific move-in checklist, notifies the right teams, drafts the welcome communication in TIC brand voice, and answers staff questions like "What's the HVAC commissioning process for 19900 MacArthur?"</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Standardized white glove onboarding at every property</li><li>Fewer missed steps in the first 30 days</li><li>Coordinators manage more move-ins with less effort</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Move-Out</span><span class="uc-tag">CapEx</span></div><h3>Move-Out &amp; Suite Turnover Agent</h3><div class="uc-problem">When a tenant vacates, TIC must manage lease-end obligations, deposit reconciliation, inspections, and vendor scheduling — all manually across disconnected systems.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Triggered by lease expiration in SFDC — pulls lease-end obligations, generates a turnover checklist with vendor RFQ templates, surfaces the full ServiceNow work order history, and auto-drafts the security deposit reconciliation for Legal.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Faster suite-to-market time post-vacancy</li><li>Consistent documentation protects TIC in disputes</li><li>PMs manage the process — not the paperwork</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Customer Journey</span><span class="uc-tag">SFDC</span></div><h3>Lease Lifecycle Interaction Agent</h3><div class="uc-problem">Over a multi-year lease, a tenant interacts with TIC across leasing, PM, billing, and facilities — but no single system holds the full picture when an escalation comes in.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Compiles SFDC activity log, emails, work order history, lease amendments, and open escalations into a single briefing. Flags milestone triggers: 18-month renewal window, SLA breach risk, overdue rent review.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Every touchpoint informed by the full tenant history</li><li>Proactive outreach replaces reactive firefighting</li><li>SFDC quality improves as gaps are surfaced</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Leasing</span><span class="uc-tag">SFDC</span></div><h3>Leasing Proposal &amp; Renewal Draft Agent</h3><div class="uc-problem">Building competitive proposals requires pulling comps, TI ranges, stack plans, and prior deal terms — hours or days of work with quality varying widely by rep tenure.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Given a suite, submarket, and tenant profile from SFDC — assembles comparable deal history, proposes indicative rent and TI allowances, drafts the proposal and cover email in TIC brand voice, and flags template deviations for Legal.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Proposal turnaround cut from days to hours</li><li>Every rep has an analyst in the loop</li><li>Consistent, brand-compliant output across all markets</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">ServiceNow</span><span class="uc-tag">White Glove</span></div><h3>Tenant Service Request Intelligence</h3><div class="uc-problem">When tenants submit service requests, routing is manual, historical context is never surfaced, and tenants repeat themselves across multiple contacts.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Connected to ServiceNow and SFDC — auto-classifies and routes requests using building context; gives the responding engineer a first-response brief with prior incident history; surfaces recurring patterns by building or suite.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>20–30% reduction in time to route and resolve requests</li><li>Tenants feel heard — every time</li><li>Pattern intelligence reduces repeat incidents</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Retention</span><span class="uc-tag">SFDC</span></div><h3>Renewal Risk &amp; Retention Alert Agent</h3><div class="uc-problem">Teams rely on manual SFDC reports and calendar reminders to identify renewal risk — often discovering exposure too late to change the outcome.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Continuously monitors SFDC engagement scores, open service complaints, SLA breaches, and lease expirations. Delivers a weekly retention briefing with risk-ranked tenants and a recommended outreach script — before the 18-month window closes.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Proactive conversations replace reactive salvage calls</li><li>Reps prioritize the right accounts at the right time</li><li>SFDC hygiene improves as stale records are flagged</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Legal</span><span class="uc-tag">Compliance</span></div><h3>Lease Clause Finder &amp; Compliance Agent</h3><div class="uc-problem">Answering lease questions — signage rights, alteration permissions, sublet terms — means manually opening PDFs across thousands of active leases in SharePoint.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">Ask "Which tenants at Spectrum Terrace have signage rights above the 5th floor?" — Glean searches the full DMS/SharePoint lease repository, surfaces the exact clause with a direct document link, and summarizes it in plain language.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Tenant questions answered in minutes, not hours</li><li>Accurate responses reduce legal exposure</li><li>Supports TIC's AI-assisted contract review goals</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Onboarding</span><span class="uc-tag">White Glove</span></div><h3>New Tenant Onboarding Knowledge Hub</h3><div class="uc-problem">New tenants flood property management with questions in their first 90 days — parking, HVAC, amenities, access, emergency procedures — a reactive burden that doesn't scale.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">A Tenant Onboarding Agent surfaced through TIC's tenant portal — answers questions instantly from building-specific SOPs and amenity guides. Internally, PMs ask "What's the standard onboarding packet for Spectrum Center?" and get an auto-assembled guide ready to send.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Tenants self-serve during the highest-contact first 90 days</li><li>PMs redirect time to relationship management</li><li>Consistent experience across 590+ buildings — no headcount added</li></ul></div></div></div>
+      <div class="uc-card"><div class="uc-tags"><span class="uc-tag">Leadership</span><span class="uc-tag">Portfolio</span></div><h3>Executive Office Portfolio Briefing Agent</h3><div class="uc-problem">VP-level leaders manually assemble leasing pipeline updates, occupancy snapshots, service escalations, and CapEx reports before every leadership review.</div><button class="uc-expand-btn" onclick="toggleUC(this)">See detail <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button><div class="uc-detail"><div class="uc-detail-section"><div class="uc-detail-label">Glean's Solution</div><div class="uc-detail-text">On-demand or scheduled executive briefings covering: leasing pipeline by submarket with risk flags, occupancy and roll exposure, open service escalations by SLA status, CapEx budget vs. actuals, and renewal gaps — sourced from SFDC, ServiceNow, SharePoint, and financial systems.</div></div><div class="uc-detail-section"><div class="uc-detail-label">Outcome</div><ul><li>Leadership arrives at every review fully briefed</li><li>Faster decisions on leasing strategy and retention</li><li>Pipeline hygiene issues exposed before they become missed quarters</li></ul></div></div></div>
+    </div>
+  </div>
+</div>
+<div id="platform" style="background:var(--bg-card)">
+  <div class="container-wide" style="padding:80px 24px">
+    <div class="section-header">
+      <div class="section-label" style="margin-bottom:12px">Why Glean is the right platform</div>
+      <h2>Built for this — not bolted on</h2>
+      <p>Glean is a horizontal Work AI layer — not a point solution. TIC gets a single platform across every use case, every team, and every building.</p>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card"><div class="platform-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg></div><div class="platform-sub">Connected Context</div><h3>One layer across every system</h3><p>Native connectors to Salesforce, ServiceNow, SharePoint, Google Workspace, and 120+ more. Glean builds an enterprise knowledge graph across people, projects, and systems — pulling full context instead of forcing app-by-app searches.</p></div>
+      <div class="platform-card"><div class="platform-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div><div class="platform-sub">Governed by Default</div><h3>Permission-aware — always</h3><p>Glean inherits source app permissions and never broadens access. Sensitive lease data, legal documents, and financial records stay governed. Critical for a company managing billions in long-term real estate assets.</p></div>
+      <div class="platform-card"><div class="platform-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/></svg></div><div class="platform-sub">Flexible AI</div><h3>LLM-agnostic — including Gemini</h3><p>TIC's GCP and Gemini strategy is preserved. Glean is model-agnostic — departments can select OpenAI, Claude, or Gemini for any query or agent task. No vendor lock-in at the AI layer.</p></div>
+      <div class="platform-card"><div class="platform-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div><div class="platform-sub">Agents at Scale</div><h3>No-code agents — built by the business</h3><p>Glean's agent platform lets property managers, leasing reps, and ops leads build and deploy agents — no engineering required. Codify the highest-value workflows and make them reusable across the portfolio.</p></div>
+    </div>
+  </div>
+</div>
+<div id="proof">
+  <div class="container-wide" style="padding:80px 24px">
+    <div class="section-header">
+      <div class="section-label" style="margin-bottom:12px">Customer proof</div>
+      <h2>Real estate and property companies already winning with Glean</h2>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card"><div class="proof-sector">Mixed-Use Real Estate</div><h3>Howard Hughes Corporation</h3><p>Mixed-use real estate owner and operator — analogous to TIC in long-term ownership, master planning, and tenant experience. Uses Glean to centralize asset, leasing, and operations knowledge across office, retail, and mixed-use environments.</p><span class="proof-stat">White glove partnership · Beta access · PM alignment</span></div>
+      <div class="proof-card"><div class="proof-sector">Real Estate Marketplace</div><h3>Zillow</h3><p>Uses Glean to power onboarding and support workflows across engineering, HR, and operations — demonstrating the platform's ability to unify knowledge for scale-intensive property organizations.</p><span class="proof-stat">Onboarding · Support workflows · Knowledge unification</span></div>
+      <div class="proof-card"><div class="proof-sector">Global Property Platform</div><h3>REA Group</h3><p>Real estate and property advertising organization using Glean to unify knowledge for sales, product, and operations across global markets. Validates Glean for property-data-rich, multi-region portfolios.</p><span class="proof-stat">Multi-region · Sales enablement · Operations</span></div>
+      <div class="proof-card"><div class="proof-sector">Residential iBuyer</div><h3>Opendoor</h3><p>Real estate operator using Glean over Salesforce, internal wikis, and documents to speed underwriting, operations, and support decisions — directly relevant to TIC's transaction-heavy leasing workflows.</p><span class="proof-stat">Salesforce · Operations · Support decisions</span></div>
+    </div>
+  </div>
+</div>
+<div id="path" style="background:var(--bg-card)">
+  <div class="container" style="padding:80px 24px">
+    <div class="section-header">
+      <div class="section-label" style="margin-bottom:12px">A path to value</div>
+      <h2>Land on the highest-impact use cases. Expand from there.</h2>
+      <p>Glean is designed to start fast and grow with TIC — not require a multi-year transformation before delivering value.</p>
+    </div>
+    <div class="phases">
+      <div class="phase-item"><div class="phase-left"><div class="phase-label">Phase</div><div class="phase-name">01</div></div><div class="phase-right"><h3>Land on SFDC + ServiceNow</h3><p>Connect Glean to Salesforce and ServiceNow — where TIC already has the highest data density and the clearest measurable outcomes. Deliver immediate value for leasing reps, property managers, and IT.</p><div class="phase-ucs"><span class="phase-uc-tag">Tenant 360 Agent</span><span class="phase-uc-tag">Service Request Intelligence</span><span class="phase-uc-tag">Renewal Risk Agent</span></div></div></div>
+      <div class="phase-item"><div class="phase-left"><div class="phase-label">Phase</div><div class="phase-name">02</div></div><div class="phase-right"><h3>Automate the full lease lifecycle</h3><p>Expand to move-in, move-out, proposal drafting, and customer journey continuity — codifying the playbooks and handoffs that define TIC's white glove standard at every building.</p><div class="phase-ucs"><span class="phase-uc-tag">Move-In Coordinator</span><span class="phase-uc-tag">Move-Out &amp; Turnover</span><span class="phase-uc-tag">Lifecycle Interaction</span><span class="phase-uc-tag">Proposal Draft</span></div></div></div>
+      <div class="phase-item"><div class="phase-left"><div class="phase-label">Phase</div><div class="phase-name">03</div></div><div class="phase-right"><h3>Scale to portfolio leadership and compliance</h3><p>Surface the platform to legal, finance, and executive leadership — enabling lease clause intelligence, portfolio briefings, and the AI governance controls TIC's CTO office needs.</p><div class="phase-ucs"><span class="phase-uc-tag">Lease Clause Finder</span><span class="phase-uc-tag">Onboarding Hub</span><span class="phase-uc-tag">Executive Briefing</span></div></div></div>
+    </div>
+  </div>
+</div>
+<div class="closing">
+  <div class="container">
+    <h2>Glean helps Irvine Company operationalize what competitors can't copy</h2>
+    <p>Decades of leasing judgment, operational playbooks, and tenant relationships — made searchable, repeatable, and scalable across every building in the portfolio.</p>
+    <div class="closing-steps">
+      <span class="closing-step">First, make internal expertise searchable and reusable</span>
+      <span class="closing-step">Next, codify the highest-value workflows into agents</span>
+      <span class="closing-step">Then, extend the trusted layer across the full portfolio</span>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-left">Prepared for Irvine Company Office Properties · Glean Sales</div>
+  <div class="footer-right">Alex Dorani · Enterprise AE · Internal Use Only</div>
+</footer>
+<script>
+  function toggleUC(btn) {
+    const card = btn.closest('.uc-card');
+    const detail = card.querySelector('.uc-detail');
+    const isOpen = detail.classList.contains('open');
+    detail.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    btn.childNodes[0].textContent = isOpen ? 'See detail ' : 'Hide detail ';
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        setTimeout(() => el.classList.add('visible'), el.dataset.delay || 0);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.why-item, .uc-card, .platform-card, .proof-card, .phase-item').forEach((el, i) => {
+    el.dataset.delay = (i % 4) * 80;
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
