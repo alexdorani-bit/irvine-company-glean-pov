@@ -8,7 +8,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #f5f5f7; --bg-card: #ffffff; --text: #1d1d1f; --text-secondary: #6e6e73;
-      --text-tertiary: #86868b; --accent: #0071e3; --accent-soft: rgba(0,113,227,0.08);
+      --text-tertiary: #86868b; --accent: #C8392B; --accent-soft: rgba(200,57,43,0.08);
       --border: rgba(0,0,0,0.08); --border-light: rgba(0,0,0,0.05);
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.07), 0 4px 12px rgba(0,0,0,0.05);
       --shadow-md: 0 2px 6px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.07);
@@ -48,7 +48,7 @@
     .use-cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .uc-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-sm); transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; opacity: 0; transform: translateY(12px); }
     .uc-card.visible { animation: fadeUp 0.45s ease forwards; }
-    .uc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(0,113,227,0.2); }
+    .uc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(200,57,43,0.2); }
     .uc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
     .uc-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); border-radius: 20px; padding: 3px 10px; }
     .uc-card h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; color: var(--text); margin-bottom: 10px; line-height: 1.3; }
